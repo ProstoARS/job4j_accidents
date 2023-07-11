@@ -6,6 +6,7 @@ import ru.job4j.accidents.model.Accident;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
@@ -36,5 +37,13 @@ public class AccidentMem {
 
     public void add(Accident accident) {
         accidents.put(accident.getId(), accident);
+    }
+
+    public Optional<Accident> findAccidentById(int accidentId) {
+        return Optional.ofNullable(accidents.get(accidentId));
+    }
+
+    public void update(Accident accident) {
+        accidents.replace(accident.getId(), accident);
     }
 }
