@@ -1,6 +1,5 @@
 package ru.job4j.accidents.repository;
 
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import ru.job4j.accidents.model.Accident;
 
@@ -10,10 +9,26 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
-@AllArgsConstructor
 public class AccidentMem {
 
     private final Map<Integer, Accident> accidents = new ConcurrentHashMap<>();
+
+    public AccidentMem() {
+        Accident accident1 = Accident.builder()
+                .id(1)
+                .name("Иван Иванов")
+                .text("Парковка в неположенном месте")
+                .address("Ивановская 33")
+                .build();
+        Accident accident2 = Accident.builder()
+                .id(2)
+                .name("Незнайка")
+                .text("Упал в канаву на автомобиле Винтика и Шпунтика")
+                .address("Цветочная ул.")
+                .build();
+        accidents.put(1, accident1);
+        accidents.put(2, accident2);
+    }
 
     public List<Accident> findAll() {
         return new ArrayList<>(accidents.values());
