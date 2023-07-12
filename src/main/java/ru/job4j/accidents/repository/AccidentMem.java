@@ -8,27 +8,29 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
 public class AccidentMem {
 
+    private final AtomicInteger id = new AtomicInteger();
     private final Map<Integer, Accident> accidents = new ConcurrentHashMap<>();
 
     public AccidentMem() {
         Accident accident1 = Accident.builder()
-                .id(1)
+                .id(id.getAndIncrement())
                 .name("Иван Иванов")
                 .text("Парковка в неположенном месте")
                 .address("Ивановская 33")
                 .build();
         Accident accident2 = Accident.builder()
-                .id(2)
+                .id(id.getAndIncrement())
                 .name("Незнайка")
                 .text("Упал в канаву на автомобиле Винтика и Шпунтика")
                 .address("Цветочная ул.")
                 .build();
-        accidents.put(1, accident1);
-        accidents.put(2, accident2);
+        accidents.put(accident1.getId(), accident1);
+        accidents.put(accident2.getId(), accident2);
     }
 
     public List<Accident> findAll() {
@@ -36,6 +38,7 @@ public class AccidentMem {
     }
 
     public void add(Accident accident) {
+        accident.setId(id.getAndIncrement());
         accidents.put(accident.getId(), accident);
     }
 

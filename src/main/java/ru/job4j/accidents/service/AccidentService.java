@@ -12,8 +12,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AccidentService {
 
-    private int id = 3;
-
     private final AccidentMem accidentMem;
 
     public List<Accident> findAll() {
@@ -21,7 +19,6 @@ public class AccidentService {
     }
 
     public void add(Accident accident) {
-        accident.setId(id++);
         accidentMem.add(accident);
     }
 
