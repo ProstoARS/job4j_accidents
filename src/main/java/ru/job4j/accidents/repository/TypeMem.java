@@ -32,7 +32,7 @@ public class TypeMem {
         typeMap.put(accidentType.getId(), accidentType);
     }
 
-    public List<AccidentType> findAllTypes() {
+    public List<AccidentType> findAll() {
         return new ArrayList<>(typeMap.values());
     }
 

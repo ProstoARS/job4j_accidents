@@ -20,15 +20,14 @@ public class AccidentController {
     @GetMapping("/createAccident")
     public String viewCreateAccident(Model model) {
         model.addAttribute("accident", new Accident());
-        List<AccidentType> types = typeService.findAllTypes();
+        List<AccidentType> types = typeService.findAll();
         model.addAttribute("types", types);
         return "createAccident";
     }
 
     @PostMapping("/saveAccident")
     public String save(@ModelAttribute Accident accident) {
-        int typeId = accident.getType().getId();
-        accident.setType(typeService.findTypeById(typeId).get());
+        typeService.setTypeById(accident);
         accidents.add(accident);
         return "redirect:/index";
     }
@@ -41,15 +40,14 @@ public class AccidentController {
         }
         Accident accident = accidentsById.get();
         model.addAttribute("accident", accident);
-        List<AccidentType> types = typeService.findAllTypes();
+        List<AccidentType> types = typeService.findAll();
         model.addAttribute("types", types);
         return "editAccident";
     }
 
     @PostMapping("/updateAccident")
     public String update(@ModelAttribute Accident accident) {
-        int typeId = accident.getType().getId();
-        accident.setType(typeService.findTypeById(typeId).get());
+        typeService.setTypeById(accident);
         accidents.update(accident);
         return "redirect:/index";
     }

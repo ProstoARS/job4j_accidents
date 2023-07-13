@@ -2,6 +2,7 @@ package ru.job4j.accidents.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.model.AccidentType;
 import ru.job4j.accidents.repository.TypeMem;
 
@@ -18,11 +19,16 @@ public class TypeService {
         typeMem.addType(accidentType);
     }
 
-    public List<AccidentType> findAllTypes() {
-        return typeMem.findAllTypes();
+    public List<AccidentType> findAll() {
+        return typeMem.findAll();
     }
 
     public Optional<AccidentType> findTypeById(int typeId) {
         return typeMem.findTypeById(typeId);
+    }
+
+    public void setTypeById(Accident accident) {
+        int typeId = accident.getType().getId();
+        accident.setType(typeMem.findTypeById(typeId).get());
     }
 }
