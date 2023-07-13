@@ -18,13 +18,13 @@ public class AccidentMem {
 
     public AccidentMem() {
         Accident accident1 = Accident.builder()
-                .id(id.getAndIncrement())
+                .id(id.incrementAndGet())
                 .name("Иван Иванов")
                 .text("Парковка в неположенном месте")
                 .address("Ивановская 33")
                 .build();
         Accident accident2 = Accident.builder()
-                .id(id.getAndIncrement())
+                .id(id.incrementAndGet())
                 .name("Незнайка")
                 .text("Упал в канаву на автомобиле Винтика и Шпунтика")
                 .address("Цветочная ул.")
@@ -38,7 +38,7 @@ public class AccidentMem {
     }
 
     public void add(Accident accident) {
-        accident.setId(id.getAndIncrement());
+        accident.setId(id.incrementAndGet());
         accidents.put(accident.getId(), accident);
     }
 
