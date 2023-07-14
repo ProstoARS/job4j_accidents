@@ -32,7 +32,7 @@ public class AccidentController {
 
     @PostMapping("/saveAccident")
     public String save(@ModelAttribute Accident accident, HttpServletRequest req) {
-        typeService.setTypeById(accident);
+        accidents.setTypeById(accident);
         String[] ids = req.getParameterValues("rIds");
         ruleService.setRuleById(ids, accident);
         accidents.add(accident);
@@ -59,8 +59,7 @@ public class AccidentController {
 
     @PostMapping("/updateAccident")
     public String update(@ModelAttribute Accident accident, @RequestParam("rIds") String[] ids) {
-        typeService.setTypeById(accident);
-//        String[] ids = req.getParameterValues("rIds");
+        accidents.setTypeById(accident);
         ruleService.setRuleById(ids, accident);
         accidents.update(accident);
         return "redirect:/index";
