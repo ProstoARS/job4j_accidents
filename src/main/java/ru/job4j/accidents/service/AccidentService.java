@@ -24,9 +24,10 @@ public class AccidentService {
         return accidentRepository.findAll();
     }
 
-    public void add(Accident accident) {
+    public void add(int[] rIds, Accident accident) {
         int typeId = accident.getType().getId();
         accident.setType(typeMem.findTypeById(typeId).get());
+        setRuleById(rIds, accident);
         accidentRepository.add(accident);
     }
 
@@ -34,16 +35,17 @@ public class AccidentService {
         return accidentRepository.findAccidentById(accidentId);
     }
 
-    public void update(Accident accident) {
+    public void update(int[] rIds, Accident accident) {
         int typeId = accident.getType().getId();
         accident.setType(typeMem.findTypeById(typeId).get());
+        setRuleById(rIds, accident);
         accidentRepository.update(accident);
     }
 
 
-    public void setRuleById(String[] ids, Accident accident) {
-        accident.setRules(Arrays.stream(ids)
-                .map(v -> rulesMem.findById(Integer.parseInt(v)).get())
+    public void setRuleById(int[] rIds, Accident accident) {
+        accident.setRules(Arrays.stream(rIds)
+                .mapToObj(v -> rulesMem.findById(v).get())
                 .collect(Collectors.toSet()));
     }
 }
