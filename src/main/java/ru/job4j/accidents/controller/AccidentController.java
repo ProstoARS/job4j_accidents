@@ -10,7 +10,6 @@ import ru.job4j.accidents.service.AccidentService;
 import ru.job4j.accidents.service.RuleService;
 import ru.job4j.accidents.service.TypeService;
 
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -44,9 +43,6 @@ public class AccidentController {
         Accident accident = accidentsById.get();
         model.addAttribute("accident", accident);
         Set<Rule> rules = accident.getRules();
-        if (rules == null) {
-            rules = new HashSet<>();
-        }
         model.addAttribute("accidentRules", rules);
         model.addAttribute("types", typeService.findAll());
         model.addAttribute("rules", ruleService.findAll());
