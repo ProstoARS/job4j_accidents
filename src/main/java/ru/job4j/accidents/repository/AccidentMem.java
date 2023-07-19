@@ -57,4 +57,9 @@ public class AccidentMem implements IAccidentRepository {
     public void update(Accident accident) {
         accidents.replace(accident.getId(), accident);
     }
+
+    @Override
+    public Set<Rule> findAllRulesByAccidentId(int accidentId) {
+        return accidents.get(accidentId).getRules();
+    }
 }

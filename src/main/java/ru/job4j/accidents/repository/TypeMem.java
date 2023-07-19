@@ -1,5 +1,6 @@
 package ru.job4j.accidents.repository;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import ru.job4j.accidents.model.AccidentType;
 
@@ -11,7 +12,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
-public class TypeMem {
+@Profile("mem")
+public class TypeMem implements ITypeRepository {
 
     private final AtomicInteger id = new AtomicInteger();
     private final Map<Integer, AccidentType> typeMap = new ConcurrentHashMap<>();
@@ -27,15 +29,18 @@ public class TypeMem {
         typeMap.put(accidentType3.getId(), accidentType3);
     }
 
+    @Override
     public void addType(AccidentType accidentType) {
         accidentType.setId(id.incrementAndGet());
         typeMap.put(accidentType.getId(), accidentType);
     }
 
+    @Override
     public List<AccidentType> findAll() {
         return new ArrayList<>(typeMap.values());
     }
 
+    @Override
     public Optional<AccidentType> findTypeById(int typeId) {
         return Optional.ofNullable(typeMap.get(typeId));
     }
