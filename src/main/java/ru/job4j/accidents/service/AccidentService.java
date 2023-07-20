@@ -21,10 +21,7 @@ public class AccidentService {
     private final IRulesRepository rulesRepository;
 
     public List<Accident> findAll() {
-        List<Accident> all = accidentRepository.findAll();
-        all.forEach(accident -> accident.setRules(
-                accidentRepository.findAllRulesByAccidentId(accident.getId())));
-        return all;
+        return accidentRepository.findAll();
     }
 
     public void add(int[] rIds, Accident accident) {

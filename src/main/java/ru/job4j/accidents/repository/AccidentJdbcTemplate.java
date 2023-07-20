@@ -65,7 +65,7 @@ public class AccidentJdbcTemplate implements IAccidentRepository {
 
     @Override
     public List<Accident> findAll() {
-        return jdbc.query(FIND_ALL,
+       List<Accident> all = jdbc.query(FIND_ALL,
                 (rs, rowNum) -> Accident.builder()
                         .id(rs.getInt(1))
                         .name(rs.getString(2))
@@ -74,6 +74,9 @@ public class AccidentJdbcTemplate implements IAccidentRepository {
                         .type(AccidentType.builder().id(rs.getInt(5))
                                 .name(rs.getString(6)).build())
                         .build());
+        all.forEach(accident -> accident.setRules(
+                findAllRulesByAccidentId(accident.getId())));
+        return all;
     }
 
     @Override
