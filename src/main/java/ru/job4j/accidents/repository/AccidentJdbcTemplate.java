@@ -142,7 +142,6 @@ public class AccidentJdbcTemplate implements IAccidentRepository {
         return rules;
     }
 
-    @Override
     public Set<Rule> findAllRulesByAccidentId(int accidentId) {
         Set<Rule> rules = new HashSet<>();
         jdbc.query(SELECT_RULES_BY_ACCIDENT_ID,
