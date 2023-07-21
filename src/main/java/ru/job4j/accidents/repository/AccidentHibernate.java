@@ -1,12 +1,12 @@
 package ru.job4j.accidents.repository;
 
 import lombok.AllArgsConstructor;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import ru.job4j.accidents.model.Accident;
+
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
@@ -26,44 +26,26 @@ public class AccidentHibernate implements IAccidentRepository {
             WHERE a.id = :fId
             """;
 
-    private final SessionFactory sf;
+    private final CrudRepository crudRepository;
 
 
     @Override
     public List<Accident> findAll() {
-        try (Session session = sf.openSession()) {
-            return session
-                    .createQuery(SELECT_ACCIDENTS, Accident.class)
-                    .list();
-        }
+        return crudRepository.query(SELECT_ACCIDENTS, Accident.class);
     }
 
     @Override
     public void add(Accident accident) {
-        try (Session session = sf.openSession()) {
-            session.beginTransaction();
-            session.persist(accident);
-            session.getTransaction().commit();
-        }
+         crudRepository.run(session -> session.persist(accident));
     }
 
     @Override
     public Optional<Accident> findAccidentById(int accidentId) {
-        Optional<Accident> optionalAccident;
-        try (Session session = sf.openSession()) {
-            optionalAccident = session.createQuery(SELECT_ACCIDENT, Accident.class)
-                    .setParameter("fId", accidentId)
-                    .uniqueResultOptional();
-        }
-        return optionalAccident;
+        return crudRepository.optional(SELECT_ACCIDENT, Accident.class, Map.of("fId", accidentId));
     }
 
     @Override
     public void update(Accident accident) {
-        try (Session session = sf.openSession()) {
-            session.beginTransaction();
-            session.merge(accident);
-            session.getTransaction().commit();
-        }
+        crudRepository.run(session -> session.merge(accident));
     }
 }

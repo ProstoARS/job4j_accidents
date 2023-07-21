@@ -1,13 +1,12 @@
 package ru.job4j.accidents.repository;
 
 import lombok.AllArgsConstructor;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import ru.job4j.accidents.model.AccidentType;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
@@ -24,32 +23,20 @@ public class TypeHibernate implements ITypeRepository {
             WHERE t.id = :tId
             """;
 
-    private final SessionFactory sf;
+    private final CrudRepository crudRepository;
+
     @Override
     public void addType(AccidentType accidentType) {
-        try (Session session = sf.openSession()) {
-            session.beginTransaction();
-            session.persist(accidentType);
-            session.getTransaction().commit();
-        }
+        crudRepository.run(session -> session.persist(accidentType));
     }
 
     @Override
     public List<AccidentType> findAll() {
-        try (Session session = sf.openSession()) {
-            return session.createQuery(FIND_ALL, AccidentType.class)
-                    .getResultList();
-        }
+        return crudRepository.query(FIND_ALL, AccidentType.class);
     }
 
     @Override
     public Optional<AccidentType> findTypeById(int typeId) {
-        Optional<AccidentType> optionalType;
-        try (Session session = sf.openSession()) {
-            optionalType = session.createQuery(FIND_TYPE_BY_ID, AccidentType.class)
-                    .setParameter("tId", typeId)
-                    .uniqueResultOptional();
-        }
-        return optionalType;
+        return crudRepository.optional(FIND_TYPE_BY_ID, AccidentType.class, Map.of("tId", typeId));
     }
 }

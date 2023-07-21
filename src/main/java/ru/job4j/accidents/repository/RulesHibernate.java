@@ -1,13 +1,12 @@
 package ru.job4j.accidents.repository;
 
 import lombok.AllArgsConstructor;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import ru.job4j.accidents.model.Rule;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
@@ -24,27 +23,17 @@ public class RulesHibernate implements IRulesRepository {
             WHERE r.id = :tId
             """;
 
-    private final SessionFactory sf;
+    private final CrudRepository crudRepository;
 
 
     @Override
     public List<Rule> findAll() {
-        try (Session session = sf.openSession()) {
-            return session
-                    .createQuery(FIND_ALL, Rule.class)
-                    .list();
-        }
+            return crudRepository
+                    .query(FIND_ALL, Rule.class);
     }
 
     @Override
     public Optional<Rule> findById(int id) {
-        Optional<Rule> optionalRule;
-        try (Session session = sf.openSession()) {
-            optionalRule = session
-                    .createQuery(FIND_RULES_BY_ID, Rule.class)
-                    .setParameter("tId", id)
-                    .uniqueResultOptional();
-        }
-        return optionalRule;
+        return crudRepository.optional(FIND_RULES_BY_ID, Rule.class, Map.of("tId", id));
     }
 }
