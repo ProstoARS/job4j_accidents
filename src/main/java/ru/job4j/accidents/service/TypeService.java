@@ -3,7 +3,7 @@ package ru.job4j.accidents.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.job4j.accidents.model.AccidentType;
-import ru.job4j.accidents.repository.ITypeRepository;
+import ru.job4j.accidents.repository.TypeRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,17 +12,17 @@ import java.util.Optional;
 @AllArgsConstructor
 public class TypeService {
 
-    private final ITypeRepository typeRepository;
+    private final TypeRepository typeRepository;
 
     public void addType(AccidentType accidentType) {
-        typeRepository.addType(accidentType);
+        typeRepository.save(accidentType);
     }
 
     public List<AccidentType> findAll() {
-        return typeRepository.findAll();
+        return (List<AccidentType>) typeRepository.findAll();
     }
 
     public Optional<AccidentType> findTypeById(int typeId) {
-        return typeRepository.findTypeById(typeId);
+        return typeRepository.findById(typeId);
     }
 }
