@@ -14,6 +14,6 @@ public class RuleService {
     private final RulesRepository rulesRepository;
 
     public List<Rule> findAll() {
-        return (List<Rule>) rulesRepository.findAll();
+        return rulesRepository.findAllByOrderById();
     }
 }

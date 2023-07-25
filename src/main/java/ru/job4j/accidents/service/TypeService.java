@@ -19,7 +19,7 @@ public class TypeService {
     }
 
     public List<AccidentType> findAll() {
-        return (List<AccidentType>) typeRepository.findAll();
+        return typeRepository.findAllByOrderById();
     }
 
     public Optional<AccidentType> findTypeById(int typeId) {
