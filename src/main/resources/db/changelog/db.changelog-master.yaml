@@ -11,3 +11,5 @@ databaseChangeLog:
       file: db/scripts/005_dml_insert_rules.sql
   - include:
       file: db/scripts/006_dml_insert_type.sql
+  - include:
+      file: db/scripts/007_ddl_create_table_users_authorities.sql

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fragments</title>
+</head>
+<body>
+<a class="navbar-brand" th:fragment="header" th:href="@{/logout}">
+    <span th:text="${#authentication.principal.username}">Username</span>
+    <span> | Выйти</span>
+</a>
+</body>
+</html>
