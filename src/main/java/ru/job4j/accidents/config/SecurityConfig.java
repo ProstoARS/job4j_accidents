@@ -45,7 +45,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated());
         http.formLogin(login -> login
                 .loginPage("/login")
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/index")
                 .failureUrl("/login?error=true"));
         http.logout(logout -> logout
                 .logoutUrl("/logout")

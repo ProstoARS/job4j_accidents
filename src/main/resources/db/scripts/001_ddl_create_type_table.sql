@@ -1,3 +1,6 @@
+--liquibase formatted sql
+
+--changeset arsudakov:1
 CREATE TABLE IF NOT EXISTS type (
     id SERIAL PRIMARY KEY,
     name TEXT

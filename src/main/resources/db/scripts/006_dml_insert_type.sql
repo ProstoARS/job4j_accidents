@@ -1,3 +1,6 @@
+--liquibase formatted sql
+
+--changeset arsudakov:1
 INSERT INTO type (name)
 VALUES ('Машина');
 INSERT INTO type (name)

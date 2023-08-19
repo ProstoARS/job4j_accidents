@@ -1,3 +1,6 @@
+--liquibase formatted sql
+
+--changeset arsudakov:1
 CREATE TABLE IF NOT EXISTS accidents (
                            id serial primary key,
                            name text,
