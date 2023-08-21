@@ -5,8 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,19 +27,16 @@ public class SecurityConfig {
     @Bean
     protected UserDetailsService userDetailsService() {
         JdbcUserDetailsManager users = new JdbcUserDetailsManager(ds);
-        if (!users.userExists("user")) {
-            addUsersInDb(users);
-        }
+        users.setUsersByUsernameQuery("""
+                SELECT username, password, enabled
+                FROM users WHERE username = ?
+                """);
+        users.setAuthoritiesByUsernameQuery("""
+                SELECT u.username, a.authority
+                FROM authorities AS a, users AS u
+                WHERE u.username = ? and u.authority_id = a.id
+                """);
         return users;
-    }
-
-    private void addUsersInDb(JdbcUserDetailsManager users) {
-        UserDetails user = User.builder()
-                .username("user")
-                .password(passwordEncoder().encode("123456"))
-                .roles("USER")
-                .build();
-        users.createUser(user);
     }
 
     @Bean
@@ -49,7 +44,7 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable);
         http
                 .authorizeHttpRequests(urlConfig -> urlConfig
-                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/login", "/reg").permitAll()
                         .requestMatchers("/**").hasAnyRole("ADMIN", "USER")
                         .anyRequest().authenticated());
         http.formLogin(login -> login
