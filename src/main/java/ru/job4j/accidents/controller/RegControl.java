@@ -1,6 +1,7 @@
 package ru.job4j.accidents.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import ru.job4j.accidents.model.User;
 import ru.job4j.accidents.repository.AuthorityRepository;
 import ru.job4j.accidents.repository.UserRepository;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class RegControl {
