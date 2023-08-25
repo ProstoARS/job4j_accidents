@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import ru.job4j.accidents.model.AccidentType;
 import java.util.List;
 
-@Profile("jpa")
+@Profile({"jpa", "test"})
 public interface TypeRepository extends CrudRepository<AccidentType, Integer> {
 
     List<AccidentType> findAllByOrderById();

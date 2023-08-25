@@ -5,7 +5,7 @@ import ru.job4j.accidents.model.Accident;
 
 import java.util.List;
 
-@Profile("jpa")
+@Profile({"jpa", "test"})
 public interface AccidentRepository extends CrudRepository<Accident, Integer> {
     List<Accident> findAllByOrderById();
 }

@@ -5,7 +5,7 @@ import ru.job4j.accidents.model.Rule;
 
 import java.util.List;
 
-@Profile("jpa")
+@Profile({"jpa", "test"})
 public interface RulesRepository extends CrudRepository<Rule, Integer> {
 
     List<Rule> findAllByOrderById();
