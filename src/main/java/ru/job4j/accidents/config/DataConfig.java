@@ -1,7 +1,6 @@
 package ru.job4j.accidents.config;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -13,7 +12,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import jakarta.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
-@Configuration
+/**
+ * @Configuration
+ *
+ * use autoconfigure springboot
+ */
+
 @EnableJpaRepositories("ru.job4j.accidents.repository")
 @EnableTransactionManagement
 public class DataConfig {

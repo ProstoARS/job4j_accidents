@@ -2,15 +2,13 @@ profile:
   property:
     value: This the the application-test.yaml file
 
-db:
-  jdbc:
+
+spring:
+  datasource:
     url: jdbc:h2:mem:test
     username:
     password:
-    driver: org.h2.Driver
-
-spring:
-
+    driver-class-name: org.h2.Driver
   jpa:
     properties:
       hibernate:

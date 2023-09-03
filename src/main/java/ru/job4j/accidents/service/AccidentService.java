@@ -29,7 +29,7 @@ public class AccidentService {
         accidentRepository.save(accident);
     }
 
-    public Optional<Accident> findAccidentsById(int accidentId) {
+    public Optional<Accident> findAccidentById(int accidentId) {
         return accidentRepository.findById(accidentId);
     }
 

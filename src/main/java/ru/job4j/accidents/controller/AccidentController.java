@@ -36,7 +36,7 @@ public class AccidentController {
 
     @GetMapping("/editAccident")
     public String viewEditAccident(@RequestParam("id") int accidentId, Model model) {
-        Optional<Accident> accidentsById = accidents.findAccidentsById(accidentId);
+        Optional<Accident> accidentsById = accidents.findAccidentById(accidentId);
         if (accidentsById.isEmpty()) {
             return "redirect:/error";
         }
